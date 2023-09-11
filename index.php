@@ -29,22 +29,15 @@
 
 
     <?php
-    $db = new PDO('mysql:host=db; dbname=car-collection', 'root', 'password');
-    $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    require_once "vendor/autoload.php";
+    require_once "src/utils.php";
 
-    $query = $db->prepare("SELECT `name`, `year-made`, `zero-sixty`, `price`, `brand` FROM `cars`;");
-    $query->execute();
-    $cars = $query->fetchAll();
+    use MyStore\CarModel;
 
-    foreach ($cars as $car) {
-        echo "<h3>" . $car["name"] . "</h3>";
-        echo "<ul>";
-        echo "<li>" . $car["year-made"] . "</li>";
-        echo "<li>" . $car["zero-sixty"] . "</li>";
-        echo "<li>" . $car["price"] . "</li>";
-        echo "<li>" . $car["brand"] . "</li>";
-        echo "</ul>";
-    }
+    $user = new CarModel(make_db());
+    $cars = $user->getProperties();
+
+    create_list_of_cars($cars);
 
     ?>
 </body>
