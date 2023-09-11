@@ -17,6 +17,10 @@ function create_list_of_cars(array $cars): string | false
         }
     }
 
+    if (empty($cars)) {
+        throw new Error("Empty car array");
+    }
+
     $ret = "";
 
     foreach ($cars as $car) {
