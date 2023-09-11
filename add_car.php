@@ -8,8 +8,6 @@ use CarStore\Car;
 
 session_start();
 
-// var_dump($_POST);
-
 if (
     isset($_POST["name"]) &&
     isset($_POST["year_made"]) &&
@@ -71,7 +69,6 @@ if (
             <input type="submit" />
         </div>
     </form>
-
 
 </body>
 
