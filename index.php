@@ -24,7 +24,9 @@
 
     <header class="header">
         <h2>Home</h2>
-        <a href="add_book.php">Add book</a>
+        <form method="POST" action="./src/add_car.php">
+            <input type="submit" value="Add Car">
+        </form>
     </header>
 
 
