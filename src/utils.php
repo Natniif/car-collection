@@ -9,8 +9,14 @@ function make_db(): PDO
     return $db;
 }
 
-function create_list_of_cars(array $cars): string
+function create_list_of_cars(array $cars): string | false
 {
+    foreach ($cars as $car) {
+        if (!($car instanceof Car)) {
+            return false;
+        }
+    }
+
     $ret = "";
 
     foreach ($cars as $car) {

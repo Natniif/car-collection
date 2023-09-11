@@ -27,8 +27,7 @@ class CarModel
         $cars_ret = [];
 
         foreach ($cars as $car) {
-            $new_car = new Car($car["name"], $car["year-made"], $car["zero-sixty"], $car["price"], $car["brand"]);
-            $cars_ret[] = $new_car;
+            $cars_ret[] = new Car($car["name"], $car["year-made"], $car["zero-sixty"], $car["price"], $car["brand"]);
         }
 
         return $cars_ret;
