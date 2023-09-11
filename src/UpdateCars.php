@@ -18,12 +18,12 @@ class UpdateCars
     public function addCar(Car $car): void
     {
         $query = $this->db->prepare("INSERT INTO `cars`
-        (`name`, `year-made`, `zero-sixty`, `price`, `brand`)
-        VALUES (:car_name, :year_made, :zero-sixty, :price, :brand);");
+        (`name`, `year_made`, `zero_sixty`, `price`, `brand`, `deleted`)
+        VALUES (:car_name, :year_made, :zero_sixty, :price, :brand , 0);");
         $query->execute([
             'car_name' => $car->name,
             'year_made' => $car->year_made,
-            'zero-sixty' => $car->zero_sixty,
+            'zero_sixty' => $car->zero_sixty,
             'price' => $car->price,
             'brand' => $car->brand
         ]);

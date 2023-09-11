@@ -6,25 +6,29 @@ require_once "src/utils.php";
 use CarStore\UpdateCars;
 use CarStore\Car;
 
+session_start();
+
+// var_dump($_POST);
+
 if (
     isset($_POST["name"]) &&
-    isset($_POST["year-made"]) &&
-    isset($_POST["zero-sixty"]) &&
+    isset($_POST["year_made"]) &&
+    isset($_POST["zero_sixty"]) &&
     isset($_POST["price"]) &&
     isset($_POST["brand"])
 ) {
-
     $name = $_POST["name"];
-    $year_made = $_POST["year-made"];
-    $zero_sixty = $_POST["zero-sixty"];
+    $year_made = $_POST["year_made"];
+    $zero_sixty = $_POST["zero_sixty"];
     $price = $_POST["price"];
     $brand = $_POST["brand"];
 
     $car = new Car($name, $year_made, $zero_sixty, $price, $brand);
-    var_dump($car);
 
     $user = new UpdateCars(make_db());
     $user->addCar($car);
+} else {
+    echo "All fields are required";
 }
 
 ?>
@@ -40,32 +44,31 @@ if (
 
 <body>
 
+    <h1>Add a Car</h1>
     <form method="POST">
-        <h1>Add a Car</h1>
-
         <div>
             <label for="name">Name</label>
-            <input type="text" name="name" id="name">
+            <input type="text" name="name" id="name" />
         </div>
         <div>
-            <label for="year-made">Year Made</label>
-            <input type="text" name="year-made" id="year">
+            <label for="year_made">Year Made</label>
+            <input type="text" name="year_made" id="year" />
         </div>
         <div>
-            <label for="zero-sixty">Zero to Sixty</label>
-            <input type="text" name="zero-sixty" id="zero-sixty">
+            <label for="zero_sixty">Zero to Sixty</label>
+            <input type="text" name="zero_sixty" id="zero_sixty" />
         </div>
         <div>
             <label for="price">Price</label>
-            <input type="text" name="pricr" id="price">
+            <input type="text" name="price" id="price" />
         </div>
         <div>
             <label for="brand">Car Brand Name</label>
-            <input type="text" name="brand" id="brand">
+            <input type="text" name="brand" id="brand" />
         </div>
 
         <div>
-            <input type="submit">
+            <input type="submit" />
         </div>
     </form>
 
