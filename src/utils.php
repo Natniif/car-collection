@@ -1,5 +1,7 @@
 <?php
 
+use CarStore\Car;
+
 function make_db(): PDO
 {
     $db = new PDO('mysql:host=db; dbname=car-collection', 'root', 'password');
@@ -7,15 +9,19 @@ function make_db(): PDO
     return $db;
 }
 
-function create_list_of_cars(array $cars): void
+function create_list_of_cars(array $cars): string
 {
+    $ret = "";
+
     foreach ($cars as $car) {
-        echo "<h3>" . $car["name"] . "</h3>";
-        echo "<ul>";
-        echo "<li>" . $car["year-made"] . "</li>";
-        echo "<li>" . $car["zero-sixty"] . "</li>";
-        echo "<li>" . $car["price"] . "</li>";
-        echo "<li>" . $car["brand"] . "</li>";
-        echo "</ul>";
+        $ret .= "<h3>" . $car->name . "</h3>";
+        $ret .= "<ul>";
+        $ret .= "<li>" . $car->year_made . "</li>";
+        $ret .= "<li>" . $car->zero_sixty . "</li>";
+        $ret .= "<li>" . $car->price . "</li>";
+        $ret .= "<li>" . $car->brand . "</li>";
+        $ret .= "</ul>";
     }
+
+    return $ret;
 }

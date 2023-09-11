@@ -1,6 +1,6 @@
 <?php
 
-namespace MyStore;
+namespace CarStore;
 
 readonly class Car
 {
@@ -10,7 +10,7 @@ readonly class Car
     public float $price;
     public string $brand;
 
-    public function __construct($name, $year_made, $zero_sixty, $price, $brand)
+    public function __construct(string $name, int $year_made, float $zero_sixty, float $price, string $brand)
     {
         $this->name = $name;
         $this->year_made = $year_made;

@@ -24,7 +24,7 @@
 
     <header class="header">
         <h2>Home</h2>
-        <form method="POST" action="./src/add_car.php">
+        <form method="POST">
             <input type="submit" value="Add Car">
         </form>
     </header>
@@ -34,12 +34,13 @@
     require_once "vendor/autoload.php";
     require_once "src/utils.php";
 
-    use MyStore\CarModel;
+    use CarStore\CarModel;
 
-    $user = new CarModel(make_db());
-    $cars = $user->getProperties();
+    $model = new CarModel(make_db());
+    $cars = $model->getAllCars();
 
-    create_list_of_cars($cars);
+    $car_list = create_list_of_cars($cars);
+    echo $car_list;
 
     ?>
 </body>
