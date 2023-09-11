@@ -24,7 +24,7 @@
 
     <header class="header">
         <h2>Home</h2>
-        <a href="#">Add book</a>
+        <a href="add_book.php">Add book</a>
     </header>
 
 
