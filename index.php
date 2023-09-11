@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Template</title>
+    <title>Car Collection</title>
 
     <meta name="description" content="Template HTML file">
     <meta name="author" content="iO Academy">
@@ -21,7 +22,31 @@
 
 <body>
 
-<h1>Website Template</h1>
+    <header class="header">
+        <h2>Home</h2>
+        <a href="#">Add book</a>
+    </header>
 
+
+    <?php
+    $db = new PDO('mysql:host=db; dbname=car-collection', 'root', 'password');
+    $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+    $query = $db->prepare("SELECT `name`, `year-made`, `zero-sixty`, `price`, `brand` FROM `cars`;");
+    $query->execute();
+    $cars = $query->fetchAll();
+
+    foreach ($cars as $car) {
+        echo "<h3>" . $car["name"] . "</h3>";
+        echo "<ul>";
+        echo "<li>" . $car["year-made"] . "</li>";
+        echo "<li>" . $car["zero-sixty"] . "</li>";
+        echo "<li>" . $car["price"] . "</li>";
+        echo "<li>" . $car["brand"] . "</li>";
+        echo "</ul>";
+    }
+
+    ?>
 </body>
+
 </html>
