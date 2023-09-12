@@ -3,10 +3,8 @@
 require_once "vendor/autoload.php";
 require_once "src/utils.php";
 
-use CarStore\UpdateCars;
+use CarStore\CarModel;
 use CarStore\Car;
-
-session_start();
 
 if (
     isset($_POST["name"]) &&
@@ -23,10 +21,19 @@ if (
 
     $car = new Car($name, $year_made, $zero_sixty, $price, $brand);
 
-    $user = new UpdateCars(make_db());
-    $user->addCar($car);
-} else {
-    echo "All fields are required";
+    $validate = validateDataFields($car);
+
+    if ($validate == false) {
+        return;
+    }
+
+    $model = new CarModel(make_db());
+
+    $success = $model->addCar($car);
+    if ($success == false) {
+        echo "<strong>Database query failed, check inputted values</strong>";
+        return;
+    }
 }
 
 ?>
@@ -46,23 +53,23 @@ if (
     <form method="POST">
         <div>
             <label for="name">Name</label>
-            <input type="text" name="name" id="name" />
+            <input type="text" name="name" id="name" required />
         </div>
         <div>
             <label for="year_made">Year Made</label>
-            <input type="text" name="year_made" id="year" />
+            <input type="number" name="year_made" id="year" required />
         </div>
         <div>
             <label for="zero_sixty">Zero to Sixty</label>
-            <input type="text" name="zero_sixty" id="zero_sixty" />
+            <input type="text" name="zero_sixty" id="zero_sixty" required />
         </div>
         <div>
             <label for="price">Price</label>
-            <input type="text" name="price" id="price" />
+            <input type="text" name="price" id="price" required />
         </div>
         <div>
             <label for="brand">Car Brand Name</label>
-            <input type="text" name="brand" id="brand" />
+            <input type="text" name="brand" id="brand" required />
         </div>
 
         <div>
