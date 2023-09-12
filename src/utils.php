@@ -36,36 +36,35 @@ function create_list_of_cars(array $cars): string | false
     return $ret;
 }
 
-function validateDataFields($name, $year_made, $zero_sixty, $price, $brand): string | true
+function validateDataFields(string $name, int $year_made, float $zero_sixty, float $price, string $brand): string
 {
     $err_msg = "";
-    if (is_string($name) == false || empty($name) == true || strlen($name) > 30 || strlen($name) <= 0) {
+    if (!is_string($name) || empty($name) || strlen($name) > 30 || strlen($name) <= 0) {
         $err_msg .= "Invalid name" . "<br>";
     }
 
 
-    if (empty($year_made) == true || is_numeric($year_made) == false || strlen(strval($year_made)) <= 0 || strlen(strval($year_made)) > 4 || $year_made < 0 || $year_made > 2023) {
+    if (empty($year_made) || !is_numeric($year_made) || strlen(strval($year_made)) <= 0 || strlen(strval($year_made)) > 4 || $year_made < 0 || $year_made > 2023) {
         $err_msg .= "Invalid year" . "<br>";
     }
 
 
-    if (empty($zero_sixty) == true || is_numeric($zero_sixty) == false || $zero_sixty <= 0) {
+    if (empty($zero_sixty) || !is_numeric($zero_sixty) || $zero_sixty <= 0) {
         $err_msg .= "Invalid zero to sixty value" . "<br>";
     }
 
 
-    if (empty($price) == true || is_numeric($price) == false || $price <= 0) {
+    if (empty($price) || !is_numeric($price) || $price <= 0) {
         $err_msg .= "Invalid price" . "<br>";
     }
 
 
-    if (is_string($brand) == false || empty($brand) == true || strlen($brand) >= 20 || strlen($brand) <= 0) {
+    if (!is_string($brand) || empty($brand) || strlen($brand) >= 20 || strlen($brand) <= 0) {
         $err_msg .= "Invalid brand name" . "<br>";
     }
 
     if (strlen($err_msg) == 0) {
         return "Car successfully submitted";
-    } else {
-        return $err_msg;
     }
+    return $err_msg;
 }

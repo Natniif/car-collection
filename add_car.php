@@ -28,7 +28,7 @@ if (
         $model = new CarModel(make_db());
 
         $success = $model->addCar($car);
-        if ($success == false) {
+        if (!$success) {
             $submit_fail = "<strong>Database query failed, check inputted values</strong>";
         }
     }
