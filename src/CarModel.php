@@ -48,7 +48,7 @@ class CarModel
 
     public function deleteCarByName($carname): bool
     {
-        $query = $this->db->prepare("INSERT INTO `cars` (`deleted') VALUES (1) WHERE `name` = :name;");
+        $query = $this->db->prepare("UPDATE `cars` SET `deleted` = 1 WHERE `name` = :name LIMIT 1");
         $query->bindParam('name', $carname);
         return $query->execute();
     }
