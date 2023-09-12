@@ -20,7 +20,7 @@ class CarModel
 
     public function getAllCars(): array
     {
-        $query = $this->db->prepare("SELECT `name`, `year_made`, `zero_sixty`, `price`, `brand` FROM `cars`");
+        $query = $this->db->prepare("SELECT `name`, `year_made`, `zero_sixty`, `price`, `brand` FROM `cars` WHERE `deleted` = 0");
         $query->execute();
         $cars = $query->fetchAll();
 

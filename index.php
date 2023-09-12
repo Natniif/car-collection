@@ -30,7 +30,15 @@
     </header>
 
 
+    <form method="POST">
+        <h3>Delete a car</h3>
+        <p>Insert the name of the car that you wish to delete from the collection below</p>
+        <label for="car_name"></label>
+        <input type="text" name="car_name" id="car_name_input">
+    </form>
+
     <?php
+
     require_once "vendor/autoload.php";
     require_once "src/utils.php";
 
