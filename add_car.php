@@ -6,8 +6,7 @@ require_once "src/utils.php";
 use CarStore\CarModel;
 use CarStore\Car;
 
-$validate = ""; // initialise globally so no error message on screen before submitted form 
-
+$validate = ""; // initialise globally so no error message on screen before submitted form
 if (
     isset($_POST["name"]) &&
     isset($_POST["year_made"]) &&

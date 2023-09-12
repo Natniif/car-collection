@@ -19,7 +19,8 @@ if (isset($_POST["car_name"])) {
 
     if (is_string($car_name) && strlen($car_name) <= 30 && !empty($car_name)) {
         $method = new CarModel(make_db());
-        $out = $method->deleteCarByName($car_name);
+        $id = $method->getIdFromName($car_name);
+        $out = $method->deleteCarById($id);
     } else {
         $err_msg = "Invalid name";
     }
