@@ -24,7 +24,7 @@
 
     <header class="header">
         <h2>Home</h2>
-        <form method="POST">
+        <form method="POST" action="add_car.php">
             <input type="submit" value="Add Car">
         </form>
     </header>
