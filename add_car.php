@@ -6,6 +6,8 @@ require_once "src/utils.php";
 use CarStore\CarModel;
 use CarStore\Car;
 
+$validate = ""; // initialise globally so no error message on screen before submitted form 
+
 if (
     isset($_POST["name"]) &&
     isset($_POST["year_made"]) &&
@@ -19,20 +21,16 @@ if (
     $price = $_POST["price"];
     $brand = $_POST["brand"];
 
-    $car = new Car($name, $year_made, $zero_sixty, $price, $brand);
+    $validate = validateDataFields($name, (int)$year_made, $zero_sixty, $price, $brand);
+    $submit_fail = "";
+    if ($validate == "Car successfully submitted") {
+        $car = new Car($name, $year_made, $zero_sixty, $price, $brand);
+        $model = new CarModel(make_db());
 
-    $validate = validateDataFields($car);
-
-    if ($validate == false) {
-        return;
-    }
-
-    $model = new CarModel(make_db());
-
-    $success = $model->addCar($car);
-    if ($success == false) {
-        echo "<strong>Database query failed, check inputted values</strong>";
-        return;
+        $success = $model->addCar($car);
+        if (!$success) {
+            $submit_fail = "<strong>Database query failed, check inputted values</strong>";
+        }
     }
 }
 
@@ -48,9 +46,16 @@ if (
 </head>
 
 <body>
-
+    <?php
+    echo $validate;
+    if (!empty($submit_fail)) {
+        echo $submit_fail;
+    }
+    ?>
     <h1>Add a Car</h1>
     <form method="POST">
+
+
         <div>
             <label for="name">Name</label>
             <input type="text" name="name" id="name" required />

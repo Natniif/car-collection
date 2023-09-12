@@ -60,13 +60,14 @@ if (isset($_POST["car_name"])) {
 
     <form method="POST">
 
+
+        <h3>Delete a car</h3>
         <?php
         echo $err_msg;
         if (!$out) {
             echo "Name not found";
         }
         ?>
-        <h3>Delete a car</h3>
         <p>Insert the name of the car that you wish to delete from the collection below</p>
         <label for="car_name"></label>
         <input type="text" name="car_name" id="car_name_input">
