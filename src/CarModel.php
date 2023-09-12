@@ -37,18 +37,12 @@ class CarModel
         $query = $this->db->prepare("INSERT INTO `cars`
         (`name`, `year_made`, `zero_sixty`, `price`, `brand`, `deleted`)
         VALUES (:car_name, :year_made, :zero_sixty, :price, :brand , 0);");
-        $query->execute([
+        return $query->execute([
             'car_name' => $car->name,
             'year_made' => $car->year_made,
             'zero_sixty' => $car->zero_sixty,
             'price' => $car->price,
             'brand' => $car->brand
         ]);
-
-        if ($query->rowCount() > 0) {
-            return true;
-        } else {
-            return false;
-        }
     }
 }
