@@ -46,10 +46,23 @@ class CarModel
         ]);
     }
 
-    public function deleteCarByName($carname): bool
+    public function searchForName(string $carname): array | false
     {
-        $query = $this->db->prepare("UPDATE `cars` SET `deleted` = 1 WHERE `name` = :name LIMIT 1");
+        $query = $this->db->prepare("SELECT `name` FROM `cars` WHERE `name` = :name;");
         $query->bindParam('name', $carname);
-        return $query->execute();
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function deleteCarByName(string $carname): bool
+    {
+        if (!empty($this->searchForName($carname))) {
+            $query = $this->db->prepare("UPDATE `cars` SET `deleted` = 1 WHERE `name` = :name ;");
+            $query->bindParam('name', $carname);
+
+            return $query->execute();
+        } else {
+            return false;
+        }
     }
 }

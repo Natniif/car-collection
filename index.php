@@ -10,19 +10,20 @@ $cars = $model->getAllCars();
 
 $car_list = create_list_of_cars($cars);
 
+// initialise error messages
 $err_msg = "";
+$out = true;
 
 if (isset($_POST["car_name"])) {
     $car_name = $_POST["car_name"];
 
-    if (is_string($car_name) == true && strlen($car_name) >= 30 && !empty($car_name)) {
+    if (is_string($car_name) && strlen($car_name) <= 30 && !empty($car_name)) {
         $method = new CarModel(make_db());
-        $method->deleteCarByName($car_name);
+        $out = $method->deleteCarByName($car_name);
     } else {
         $err_msg = "Invalid name";
     }
 }
-
 
 ?>
 <!DOCTYPE html>
@@ -61,6 +62,9 @@ if (isset($_POST["car_name"])) {
 
         <?php
         echo $err_msg;
+        if (!$out) {
+            echo "Name not found";
+        }
         ?>
         <h3>Delete a car</h3>
         <p>Insert the name of the car that you wish to delete from the collection below</p>
