@@ -36,56 +36,60 @@ function create_list_of_cars(array $cars): string | false
     return $ret;
 }
 
-function validateDataFields(Car $car): bool
+function validateDataFields(string $name, int $year_made, float $zero_sixty, float $price, string $brand): string
 {
-    $ret = true;
-
+    $err_msg = "";
     if (
-        empty($car->name) == true ||
-        strlen($car->name) > 30 ||
-        strlen($car->name) <= 0
+        !is_string($name) ||
+        empty($name) ||
+        strlen($name) > 30 ||
+        strlen($name) <= 0
     ) {
-        echo "Name cannot be over 30 characters long" . "<br>";
-        $ret = false;
+        $err_msg .= "Invalid name" . "<br>";
     }
 
-    if (
-        empty($car->year_made) == true ||
-        is_int($car->year_made) == false ||
-        strlen(strval($car->year_made)) <= 0 ||
-        strlen(strval($car->year_made)) > 4 ||
-        $car->year_made < 0 ||
-        $car->year_made > 2023
-    ) {
-        echo "Invalid year" . "<br>";
-        $ret = false;
-    }
 
     if (
-        empty($car->zero_sixty) == true ||
-        is_int($car->zero_sixty) == false ||
-        $car->zero_sixty <= 0
+        empty($year_made) ||
+        !is_numeric($year_made) ||
+        strlen(strval($year_made)) <= 0 ||
+        strlen(strval($year_made)) > 4 ||
+        $year_made < 0 ||
+        $year_made > 2023
     ) {
-        echo "Invalid zero to sixty value" . "<br>";
-        $ret = false;
+        $err_msg .= "Invalid year" . "<br>";
     }
 
-    if (
-        empty($car->price) == true ||
-        is_int($car->price) == false ||
-        $car->price <= 0
-    ) {
-        echo "Invalid price" . "<br>";
-        $ret = false;
-    }
 
     if (
-        empty($car->brand) == true ||
-        strlen($car->brand) >= 20 ||
-        strlen($car->brand) <= 0
+        empty($zero_sixty) ||
+        !is_numeric($zero_sixty) ||
+        $zero_sixty <= 0
     ) {
-        echo "Brand name cannot be over 20 characters" . "<br>";
-        $ret = false;
+        $err_msg .= "Invalid zero to sixty value" . "<br>";
     }
-    return $ret;
+
+
+    if (
+        empty($price) ||
+        !is_numeric($price) ||
+        $price <= 0
+    ) {
+        $err_msg .= "Invalid price" . "<br>";
+    }
+
+
+    if (
+        !is_string($brand) ||
+        empty($brand) ||
+        strlen($brand) >= 20 ||
+        strlen($brand) <= 0
+    ) {
+        $err_msg .= "Invalid brand name" . "<br>";
+    }
+
+    if (strlen($err_msg) == 0) {
+        return "Car successfully submitted";
+    }
+    return $err_msg;
 }

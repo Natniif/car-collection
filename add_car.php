@@ -45,15 +45,15 @@ if (
 </head>
 
 <body>
-    <?php
-    echo $validate;
-    if (!empty($submit_fail)) {
-        echo $submit_fail;
-    }
-    ?>
+
     <h1>Add a Car</h1>
     <form method="POST">
-
+        <?php
+        echo $validate;
+        if (!empty($submit_fail)) {
+            echo $submit_fail;
+        }
+        ?>
 
         <div>
             <label for="name">Name</label>
