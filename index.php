@@ -58,10 +58,28 @@ if (isset($_POST["car_name"])) {
         </form>
     </header>
 
+    <div>
+        <h3>Filter by car brand</h3>
+        <form action="POST">
+
+            <?php
+            if (isset($_POST["car_brand_filter"])) {
+                $brand = $_POST["car_brand_filter"];
+                $method = new CarModel(make_db());
+                $cars = $filter->filterCarBrand($brand);
+                create_list_of_cars($cars);
+            }
+            ?>
+
+
+            <Label for="car_brand">Filter by brand</Label>
+            <input type="text" name="car_brand_filter">
+            <input type="submit">
+        </form>
+    </div>
+
 
     <form method="POST">
-
-
         <h3>Delete a car</h3>
         <?php
         echo $err_msg;

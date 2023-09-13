@@ -16,6 +16,28 @@ class CarModel
         $this->db = $db;
     }
 
+    public function validateCarBrand($brand): bool
+    {
+    }
+
+    public function filterCarBrand($brand): array
+    // works like getAllCarInfo but only returns results which match $brand
+    {
+        $query = $this->db->prepare("SELECT * FROM `cars` WHERE `brand` = :brand;");
+        $query->bindParam('brand', $brand);
+        $query->execute();
+        $cars = $query->fetchAll();
+
+        $cars_ret = [];
+
+        foreach ($cars as $car) {
+            $cars_ret[] = new Car($car["name"], $car["year_made"], $car["zero_sixty"], $car["price"], $car["brand"]);
+        }
+
+        return $cars_ret;
+    }
+
+
     public function getAllCarInfo(): array
     {
         $query = $this->db->prepare(
