@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class ListOfCarsTest extends TestCase
 {
-    public function test_list_of_cars()
+    public function test_List_Of_Cars()
     {
         $expected = "";
         $expected .= "<h3>" . "ferrari spyder" . "</h3>";
@@ -24,13 +24,13 @@ class ListOfCarsTest extends TestCase
         $this->assertEquals($expected, create_list_of_cars($car));
     }
 
-    public function test_malformed_list_of_cars()
+    public function test_Malformed_List_Of_Cars()
     {
         $input = [["ferrari", 2000, 2.3, 200000, "ferrar"]];
         $this->assertFalse(create_list_of_cars($input));
     }
 
-    public function test_empty_array()
+    public function test_Empty_Array()
     {
         $input = [];
         $this->expectExceptionMessage("Empty car array");

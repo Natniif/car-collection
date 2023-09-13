@@ -7,16 +7,26 @@ use PHPUnit\Framework\TestCase;
 use CarStore\Car;
 
 
-class validateDataFieldsTest extends TestCase
+class ValidateDataFieldsTest extends TestCase
 {
-    public function test_incorrect_data()
+    public function test_Incorrect_Data()
     {
-        $expected = "Invalid name<br>Invalid year<br>Invalid zero to sixty value<br>Invalid price<br>Invalid brand name<br>";
-        $this->assertEquals($expected, validateDataFields("", -2000, -23, -23, "herlskdjflksjdkfjsklkkdkfssssssssssssssssssssssssssss"));
+        $expected =
+            "Invalid name<br>Invalid year<br>Invalid zero to sixty value<br>Invalid price<br>Invalid brand name<br>";
+        $this->assertEquals($expected, validateDataFields(
+            "",
+            -2000,
+            -23,
+            -23,
+            "herlskdjflksjdkfjsklkkdkfssssssssssssssssssssssssssss"
+        ));
     }
 
-    public function test_correct_data()
+    public function test_Correct_Data()
     {
-        $this->assertEquals("Car successfully submitted", validateDataFields("ferrari spyder", 2000, 5.3, 200000, "ferrari"));
+        $this->assertEquals(
+            "Car successfully submitted",
+            validateDataFields("ferrari spyder", 2000, 5.3, 200000, "ferrari")
+        );
     }
 }

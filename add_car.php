@@ -6,8 +6,7 @@ require_once "src/utils.php";
 use CarStore\CarModel;
 use CarStore\Car;
 
-$validate = ""; // initialise globally so no error message on screen before submitted form 
-
+$validate = ""; // initialise globally so no error message on screen before submitted form
 if (
     isset($_POST["name"]) &&
     isset($_POST["year_made"]) &&
@@ -46,15 +45,15 @@ if (
 </head>
 
 <body>
-    <?php
-    echo $validate;
-    if (!empty($submit_fail)) {
-        echo $submit_fail;
-    }
-    ?>
+
     <h1>Add a Car</h1>
     <form method="POST">
-
+        <?php
+        echo $validate;
+        if (!empty($submit_fail)) {
+            echo $submit_fail;
+        }
+        ?>
 
         <div>
             <label for="name">Name</label>

@@ -1,3 +1,32 @@
+<?php
+
+require_once "vendor/autoload.php";
+require_once "src/utils.php";
+
+use CarStore\CarModel;
+
+$model = new CarModel(make_db());
+$cars = $model->getAllCars();
+
+$car_list = create_list_of_cars($cars);
+
+// initialise error messages
+$err_msg = "";
+$out = true;
+
+if (isset($_POST["car_name"])) {
+    $car_name = $_POST["car_name"];
+
+    if (is_string($car_name) && strlen($car_name) <= 30 && !empty($car_name)) {
+        $method = new CarModel(make_db());
+        $id = $method->getIdFromName($car_name);
+        $out = $method->deleteCarById($id);
+    } else {
+        $err_msg = "Invalid name";
+    }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,18 +59,24 @@
     </header>
 
 
+    <form method="POST">
+
+
+        <h3>Delete a car</h3>
+        <?php
+        echo $err_msg;
+        if (!$out) {
+            echo "Name not found";
+        }
+        ?>
+        <p>Insert the name of the car that you wish to delete from the collection below</p>
+        <label for="car_name"></label>
+        <input type="text" name="car_name" id="car_name_input">
+        <input type="submit">
+    </form>
+
     <?php
-    require_once "vendor/autoload.php";
-    require_once "src/utils.php";
-
-    use CarStore\CarModel;
-
-    $model = new CarModel(make_db());
-    $cars = $model->getAllCars();
-
-    $car_list = create_list_of_cars($cars);
     echo $car_list;
-
     ?>
 </body>
 
