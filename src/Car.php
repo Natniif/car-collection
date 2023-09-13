@@ -10,7 +10,7 @@ readonly class Car
     public float $price;
     public string $brand;
 
-    public function __construct(string $name, int $year_made, float $zero_sixty, float $price, string $brand)
+    public function __construct(string $name = NULL, int $year_made = NULL, float $zero_sixty = NULL, float $price = NULL, string $brand = NULL)
     {
         $this->name = $name;
         $this->year_made = $year_made;
