@@ -63,7 +63,7 @@ if (isset($_POST["car_name"])) {
             if (isset($_POST["car_brand_filter"])) {
                 $brand = $_POST["car_brand_filter"];
 
-                $car_list = filterBrand($brand);
+                $car_list = filterBrand($brand, $model);
                 if (!$car_list) {
                     echo "Invalid brand name<br>";
                 }

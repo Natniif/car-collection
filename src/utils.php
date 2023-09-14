@@ -156,9 +156,8 @@ function validateEditCarDataFields(string $name, int $year_made = 0, float $zero
     return $err_msg;
 }
 
-function filterBrand(string $brand): string | false
+function filterBrand(string $brand, CarModel $model): string | false
 {
-    $model = new CarModel(make_db());
     $cars = "";
     if (empty($brand)) {
         $cars = $model->getAllCarInfo();
@@ -173,7 +172,6 @@ function filterBrand(string $brand): string | false
 
     if (!empty($cars)) {
         return create_list_of_cars($cars);
-    } else {
-        return false;
     }
+    return false;
 }
