@@ -55,7 +55,7 @@ class CarModel
     public function getAllCarInfo(): array
     {
         $query = $this->db->prepare(
-            "SELECT `name`, `year_made`, `zero_sixty`, `price`, `brand` FROM `cars` WHERE `deleted` = 0"
+            "SELECT `id`, `name`, `year_made`, `zero_sixty`, `price`, `brand` FROM `cars` WHERE `deleted` = 0"
         );
         $query->execute();
         $cars = $query->fetchAll();
