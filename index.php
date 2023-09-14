@@ -102,7 +102,7 @@ if (isset($_POST["car_name"])) {
                 $edit_err_msg = validateEditCarDataFields($car_name_edit, (int)$year_made_edit, (float)$zero_sixty_edit, (float)$price_edit, $brand_edit);
                 echo $edit_err_msg;
                 if ($method->getIdFromName($car_name_edit) && $edit_err_msg == "Car successfully submitted") {
-                    $car = new Car($car_name_edit, (int)$year_made_edit, (float)$zero_sixty_edit, (float)$price_edit, $brand_edit);
+                    $car = new Car($method->getIdFromName($car_name_edit), $car_name_edit, (int)$year_made_edit, (float)$zero_sixty_edit, (float)$price_edit, $brand_edit);
                     $out = $method->editCarDetails($car);
                 } else {
                     echo "Unable to edit car details, please check inputted values and try again";

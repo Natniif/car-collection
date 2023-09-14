@@ -23,8 +23,8 @@ if (
     $validate = validateAddCarDataFields($name, (int)$year_made, (float)$zero_sixty, (float)$price, $brand);
     $submit_fail = "";
     if ($validate == "Car successfully submitted") {
-        $car = new Car($name, $year_made, $zero_sixty, $price, $brand);
         $model = new CarModel(make_db());
+        $car = new Car($name, $year_made, $zero_sixty, $price, $brand, $model->getIdFromName($name));
 
         $success = $model->addCar($car);
         if (!$success) {

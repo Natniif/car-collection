@@ -25,9 +25,10 @@ class CarModel
         $cars = $query->fetchAll();
 
         $cars_ret = [];
+        $method = new CarModel(make_db());
 
         foreach ($cars as $car) {
-            $cars_ret[] = new Car($car["name"], $car["year_made"], $car["zero_sixty"], $car["price"], $car["brand"]);
+            $cars_ret[] = new Car($method->getIdFromName($car['name']), $car["name"], $car["year_made"], $car["zero_sixty"], $car["price"], $car["brand"]);
         }
 
         return $cars_ret;
