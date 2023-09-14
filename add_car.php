@@ -24,7 +24,7 @@ if (
     $submit_fail = "";
     if ($validate == "Car successfully submitted") {
         $model = new CarModel(make_db());
-        $car = new Car($name, $year_made, $zero_sixty, $price, $brand, $model->getIdFromName($name));
+        $car = new Car($model->getIdFromName($name), $name, $year_made, $zero_sixty, $price, $brand);
 
         $success = $model->addCar($car);
         if (!$success) {
