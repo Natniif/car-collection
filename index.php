@@ -99,7 +99,9 @@ if (isset($_POST["car_name"])) {
             $method = new CarModel(make_db());
 
             if (!empty($year_made_edit) || !empty($zero_sixty_edit) || !empty($price_edit) || !empty($brand_edit)) {
-                if ($method->searchForName($car_name_edit)) {
+                $edit_err_msg = validateEditCarDataFields($car_name_edit, (int)$year_made_edit, (float)$zero_sixty_edit, (float)$price_edit, $brand_edit);
+                echo $edit_err_msg;
+                if ($method->getIdFromName($car_name_edit) && $edit_err_msg == "Car successfully submitted") {
                     $car = new Car($car_name_edit, (int)$year_made_edit, (float)$zero_sixty_edit, (float)$price_edit, $brand_edit);
                     $out = $method->editCarDetails($car);
                 } else {

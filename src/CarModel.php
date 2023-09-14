@@ -79,18 +79,10 @@ class CarModel
         return $name_array["name"];
     }
 
-    public function searchForName(string $carname): array | false
-    {
-        $query = $this->db->prepare("SELECT `name` FROM `cars` WHERE `name` = :name;");
-        $query->bindParam('name', $carname);
-        $query->execute();
-        return $query->fetchAll();
-    }
-
     public function deleteCarById(string $id): bool
     {
         $carname = $this->getNameFromId($id);
-        if (!empty($this->searchForName($carname))) {
+        if (!empty($this->getIdFromName($carname))) {
             $query = $this->db->prepare("UPDATE `cars` SET `deleted` = 1 WHERE `id` = :id;");
             $query->bindParam('id', $id);
 
@@ -102,8 +94,6 @@ class CarModel
 
     public function editCarDetails(Car $car): bool
     {
-        $id = $this->getIdFromName($car->name);
-
         $sql_qry = "UPDATE `cars` SET ";
 
         $params = [];
@@ -128,7 +118,8 @@ class CarModel
         }
         $sql_qry = rtrim($sql_qry, ', ');
 
-        $sql_qry .= " WHERE `id` = $id;";
+        $sql_qry .= " WHERE `id` = :id;";
+        $params['id'] = $car->id;
 
         $query = $this->db->prepare($sql_qry);
 
