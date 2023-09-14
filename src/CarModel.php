@@ -18,9 +18,15 @@ class CarModel
 
     public function validateCarBrand($brand): bool
     {
-        $query = $this->db->prepare("SELECT * FROM `cars` WHERE `brand` = :brand;");
+        $query = $this->db->prepare("SELECT `brand` FROM `cars` WHERE `brand` = :brand;");
         $query->bindParam('brand', $brand);
-        return $query->execute();
+        $query->execute();
+        $ret = $query->fetch();
+        if (empty($ret)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     private function returnCarsAsNormalArray(array $cars): array
