@@ -6,7 +6,7 @@ require_once "src/utils.php";
 use CarStore\CarModel;
 
 $model = new CarModel(make_db());
-$cars = $model->getAllCars();
+$cars = $model->getAllCarInfo();
 
 $car_list = create_list_of_cars($cars);
 
@@ -78,6 +78,67 @@ if (isset($_POST["car_name"])) {
     <?php
     echo $car_list;
     ?>
+
+    <h3>Edit a cars details</h3>
+    <p>Please enter the cars name you want to edit and fill out at least one of the other fields to edit</p>
+
+    <form method="POST">
+        <?php
+
+        use CarStore\Car;
+
+        if (isset($_POST["name_edit"])) {
+
+            $car_name_edit = $_POST["name_edit"];
+            $year_made_edit = $_POST["year_made_edit"];
+            $zero_sixty_edit = $_POST["zero_sixty_edit"];
+            $price_edit = $_POST["price_edit"];
+            $brand_edit = $_POST["brand_edit"];
+
+
+            $method = new CarModel(make_db());
+
+            if (!empty($year_made_edit) || !empty($zero_sixty_edit) || !empty($price_edit) || !empty($brand_edit)) {
+                $edit_err_msg = validateEditCarDataFields($car_name_edit, (int)$year_made_edit, (float)$zero_sixty_edit, (float)$price_edit, $brand_edit);
+                echo $edit_err_msg;
+                if ($method->getIdFromName($car_name_edit) && $edit_err_msg == "Car successfully submitted") {
+                    $car = new Car($method->getIdFromName($car_name_edit), $car_name_edit, (int)$year_made_edit, (float)$zero_sixty_edit, (float)$price_edit, $brand_edit);
+                    $out = $method->editCarDetails($car);
+                } else {
+                    echo "Unable to edit car details, please check inputted values and try again";
+                }
+            } else {
+                echo "Please fill out one of the fields to edit";
+            }
+        }
+        ?>
+
+        <div>
+            <label for="name">Name</label>
+            <input type="text" name="name_edit" id="name" required />
+        </div>
+        <div>
+            <label for="year_made">Year Made</label>
+            <input type="number" name="year_made_edit" id="year" />
+        </div>
+        <div>
+            <label for="zero_sixty">Zero to Sixty</label>
+            <input type="text" name="zero_sixty_edit" id="zero_sixty" />
+        </div>
+        <div>
+            <label for="price">Price</label>
+            <input type="text" name="price_edit" id="price" />
+        </div>
+        <div>
+            <label for="brand">Car Brand Name</label>
+            <input type="text" name="brand_edit" id="brand" />
+        </div>
+
+        <div>
+            <input type="submit" />
+        </div>
+    </form>
+
 </body>
 
 </html>
