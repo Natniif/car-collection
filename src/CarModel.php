@@ -52,20 +52,28 @@ class CarModel
     }
 
 
-    public function getAllCarInfo(): array
+    public function getAllCarInfo($deleted = false): array
     {
-        $query = $this->db->prepare(
-            "SELECT `name`, `year_made`, `zero_sixty`, `price`, `brand` FROM `cars` WHERE `deleted` = 0"
-        );
+        if (!$deleted) {
+            $sql_qry = "SELECT `name`, `year_made`, `zero_sixty`, `price`, `brand` FROM `cars` WHERE `deleted` = 0;";
+        } else {
+            $sql_qry = "SELECT `name`, `year_made`, `zero_sixty`, `price`, `brand` FROM `cars` WHERE `deleted` = 1;";
+        }
+        $query = $this->db->prepare($sql_qry);
         $query->execute();
         $cars = $query->fetchAll();
 
         return $this->returnCarsAsNormalArray($cars);
     }
 
-    public function getAllCarNames(): array | false
+    public function getAllCarNames($deleted = false): array | false
     {
-        $query = $this->db->prepare("SELECT `name` FROM `cars` WHERE `deleted` = 0;");
+        if (!$deleted) {
+            $sql_qry = "SELECT `name` FROM `cars` WHERE `deleted` = 0";
+        } else {
+            $sql_qry = "SELECT `name` FROM `cars` WHERE `deleted` = 1";
+        }
+        $query = $this->db->prepare($sql_qry);
         $query->execute();
         $array_of_names = $query->fetchAll();
         $names = [];
