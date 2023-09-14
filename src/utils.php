@@ -158,7 +158,7 @@ function validateEditCarDataFields(string $name, int $year_made = 0, float $zero
 
 function filterBrand(string $brand, CarModel $model): string | false
 {
-    $cars = "";
+    $cars = [];
     if (empty($brand)) {
         $cars = $model->getAllCarInfo();
     } elseif (
