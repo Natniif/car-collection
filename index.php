@@ -5,11 +5,6 @@ require_once "src/utils.php";
 
 use CarStore\CarModel;
 
-$model = new CarModel(make_db());
-$cars = $model->getAllCarInfo();
-
-$car_list = create_list_of_cars($cars);
-
 // initialise error messages
 $err_msg = "";
 $out = true;
@@ -60,20 +55,37 @@ if (isset($_POST["car_name"])) {
 
     <div>
         <h3>Filter by car brand</h3>
-        <form action="POST">
+        <form method="POST">
 
             <?php
+
+            $model = new CarModel(make_db());
+
             if (isset($_POST["car_brand_filter"])) {
                 $brand = $_POST["car_brand_filter"];
-                $method = new CarModel(make_db());
-                $cars = $filter->filterCarBrand($brand);
-                create_list_of_cars($cars);
+
+                if (empty($brand)) {
+                    $cars = $model->getAllCarInfo();
+                } elseif (
+                    $model->validateCarBrand($brand) ||
+                    !is_string($brand) ||
+                    empty($brand) ||
+                    strlen($brand) >= 20 ||
+                    strlen($brand) <= 0
+                ) {
+                    $cars = $model->filterCarBrand($brand);
+                } else {
+                    echo "Invalid brand name";
+                }
+                $car_list = create_list_of_cars($cars);
+            } else {
+                $cars = $model->getAllCarInfo();
+                $car_list = create_list_of_cars($cars);
             }
             ?>
 
-
             <Label for="car_brand">Filter by brand</Label>
-            <input type="text" name="car_brand_filter">
+            <input type="text" name="car_brand_filter" id="car_brand_filter">
             <input type="submit">
         </form>
     </div>

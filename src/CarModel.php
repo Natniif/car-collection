@@ -18,6 +18,20 @@ class CarModel
 
     public function validateCarBrand($brand): bool
     {
+        $query = $this->db->prepare("SELECT * FROM `cars` WHERE `brand` = :brand;");
+        $query->bindParam('brand', $brand);
+        return $query->execute();
+    }
+
+    private function returnCarsAsNormalArray(array $cars): array
+    {
+        $cars_ret = [];
+
+        foreach ($cars as $car) {
+            $cars_ret[] = new Car($car["name"], $car["year_made"], $car["zero_sixty"], $car["price"], $car["brand"]);
+        }
+
+        return $cars_ret;
     }
 
     public function filterCarBrand($brand): array
@@ -27,14 +41,7 @@ class CarModel
         $query->bindParam('brand', $brand);
         $query->execute();
         $cars = $query->fetchAll();
-
-        $cars_ret = [];
-
-        foreach ($cars as $car) {
-            $cars_ret[] = new Car($car["name"], $car["year_made"], $car["zero_sixty"], $car["price"], $car["brand"]);
-        }
-
-        return $cars_ret;
+        return $this->returnCarsAsNormalArray($cars);
     }
 
 
@@ -46,13 +53,7 @@ class CarModel
         $query->execute();
         $cars = $query->fetchAll();
 
-        $cars_ret = [];
-
-        foreach ($cars as $car) {
-            $cars_ret[] = new Car($car["name"], $car["year_made"], $car["zero_sixty"], $car["price"], $car["brand"]);
-        }
-
-        return $cars_ret;
+        return $this->returnCarsAsNormalArray($cars);
     }
 
     public function getAllCarNames(): array | false
