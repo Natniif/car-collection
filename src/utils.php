@@ -1,6 +1,7 @@
 <?php
 
 use CarStore\Car;
+use CarStore\CarModel;
 
 function make_db(): PDO
 {
@@ -153,4 +154,26 @@ function validateEditCarDataFields(string $name, int $year_made = 0, float $zero
         return "Car successfully submitted";
     }
     return $err_msg;
+}
+
+function filterBrand(string $brand): string | false
+{
+    $model = new CarModel(make_db());
+    $cars = "";
+    if (empty($brand)) {
+        $cars = $model->getAllCarInfo();
+    } elseif (
+        $model->validateCarBrand($brand) ||
+        is_string($brand) ||
+        strlen($brand) <= 20 ||
+        strlen($brand) > 0
+    ) {
+        $cars = $model->filterCarBrand($brand);
+    }
+
+    if (!empty($cars)) {
+        return create_list_of_cars($cars);
+    } else {
+        return false;
+    }
 }
