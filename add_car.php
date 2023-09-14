@@ -20,7 +20,7 @@ if (
     $price = $_POST["price"];
     $brand = $_POST["brand"];
 
-    $validate = validateAddCarDataFields($name, (int)$year_made, (float)$zero_sixty, (float)$price, $brand);
+    $validate = validateDataFields($name, (int)$year_made, (float)$zero_sixty, (float)$price, $brand);
     $submit_fail = "";
     if ($validate == "Car successfully submitted") {
         $model = new CarModel(make_db());
