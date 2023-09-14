@@ -18,8 +18,9 @@ class CarModel
 
     public function validateCarBrand($brand): bool
     {
-        $query = $this->db->prepare("SELECT `brand` FROM `cars` WHERE `brand` = :brand;");
+        $query = $this->db->prepare("SELECT `brand` FROM `cars` WHERE `brand` = :brand AND `deleted` = 0;");
         $query->bindParam('brand', $brand);
+
         $query->execute();
         $ret = $query->fetch();
         if (empty($ret)) {
@@ -54,9 +55,9 @@ class CarModel
     public function getAllCarInfo($deleted = false): array
     {
         if (!$deleted) {
-            $sql_qry = "SELECT `name`, `year_made`, `zero_sixty`, `price`, `brand` FROM `cars` WHERE `deleted` = 0;";
+            $sql_qry = "SELECT `id`, `name`, `year_made`, `zero_sixty`, `price`, `brand` FROM `cars` WHERE `deleted` = 0;";
         } else {
-            $sql_qry = "SELECT `name`, `year_made`, `zero_sixty`, `price`, `brand` FROM `cars` WHERE `deleted` = 1;";
+            $sql_qry = "SELECT `id`, `name`, `year_made`, `zero_sixty`, `price`, `brand` FROM `cars` WHERE `deleted` = 1;";
         }
         $query = $this->db->prepare($sql_qry);
         $query->execute();

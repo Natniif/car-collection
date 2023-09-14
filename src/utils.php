@@ -1,6 +1,7 @@
 <?php
 
 use CarStore\Car;
+use CarStore\CarModel;
 
 function make_db(): PDO
 {
@@ -9,7 +10,7 @@ function make_db(): PDO
     return $db;
 }
 
-function create_list_of_cars(array $cars, $deleted = false): string | false
+function create_list_of_cars(array $cars): string | false
 {
     foreach ($cars as $car) {
         if (!($car instanceof Car)) {
@@ -22,29 +23,15 @@ function create_list_of_cars(array $cars, $deleted = false): string | false
     }
 
     $ret = "";
-    if (!$deleted) {
-        foreach ($cars as $car) {
-            $ret .= "<h3>" . $car->name . "</h3>";
-            $ret .= "<ul>";
-            $ret .= "<li>" . $car->year_made . "</li>";
-            $ret .= "<li>" . $car->zero_sixty . "</li>";
-            $ret .= "<li>" . $car->price . "</li>";
-            $ret .= "<li>" . $car->brand . "</li>";
-            $ret .= "</ul>";
-        }
-    } else {
-        foreach ($cars as $car) {
-            $ret .= '<form method="POST" action="restore_cars.php">';
-            $ret .= "<h3>" . $car->name . "</h3>";
-            $ret .= "<ul>";
-            $ret .= "<li>" . $car->year_made . "</li>";
-            $ret .= "<li>" . $car->zero_sixty . "</li>";
-            $ret .= "<li>" . $car->price . "</li>";
-            $ret .= "<li>" . $car->brand . "</li>";
-            $ret .= "</ul>";
-            $ret .= '<input type="submit" value="Restore Car">';
-            $ret .= '</form>';
-        }
+
+    foreach ($cars as $car) {
+        $ret .= "<h3>" . $car->name . "</h3>";
+        $ret .= "<ul>";
+        $ret .= "<li>" . $car->year_made . "</li>";
+        $ret .= "<li>" . $car->zero_sixty . "</li>";
+        $ret .= "<li>" . $car->price . "</li>";
+        $ret .= "<li>" . $car->brand . "</li>";
+        $ret .= "</ul>";
     }
 
     return $ret;
@@ -106,4 +93,24 @@ function validateDataFields(string $name, int $year_made, float $zero_sixty, flo
         return "Car successfully submitted";
     }
     return $err_msg;
+}
+
+function filterBrand(string $brand, CarModel $model): string | false
+{
+    $cars = [];
+    if (empty($brand)) {
+        $cars = $model->getAllCarInfo();
+    } elseif (
+        $model->validateCarBrand($brand) ||
+        is_string($brand) ||
+        strlen($brand) <= 20 ||
+        strlen($brand) > 0
+    ) {
+        $cars = $model->filterCarBrand($brand);
+    }
+
+    if (!empty($cars)) {
+        return create_list_of_cars($cars);
+    }
+    return false;
 }

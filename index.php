@@ -68,20 +68,9 @@ if (isset($_POST["car_name"])) {
             if (isset($_POST["car_brand_filter"])) {
                 $brand = $_POST["car_brand_filter"];
 
-                if (empty($brand)) {
-                    $cars = $model->getAllCarInfo();
-                } elseif (
-                    $model->validateCarBrand($brand) ||
-                    is_string($brand) ||
-                    strlen($brand) <= 20 ||
-                    strlen($brand) > 0
-                ) {
-                    $cars = $model->filterCarBrand($brand);
-                } else {
-                    echo "Invalid brand name";
-                }
-                if (!empty($cars)) {
-                    $car_list = create_list_of_cars($cars);
+                $car_list = filterBrand($brand, $model);
+                if (!$car_list) {
+                    echo "Invalid brand name<br>";
                 }
             } else {
                 $cars = $model->getAllCarInfo();
