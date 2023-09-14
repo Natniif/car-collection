@@ -46,7 +46,9 @@ if (
 
 <body>
 
-    <h1>Add a Car</h1>
+
+
+    <h2>Add a Car</h2>
     <form method="POST">
         <?php
         echo $validate;

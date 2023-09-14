@@ -16,14 +16,22 @@ class CarModel
         $this->db = $db;
     }
 
-    public function getAllCarInfo(): array
+    public function validateCarBrand($brand): bool
     {
-        $query = $this->db->prepare(
-            "SELECT `id`, `name`, `year_made`, `zero_sixty`, `price`, `brand` FROM `cars` WHERE `deleted` = 0"
-        );
-        $query->execute();
-        $cars = $query->fetchAll();
+        $query = $this->db->prepare("SELECT `brand` FROM `cars` WHERE `brand` = :brand AND `deleted` = 0;");
+        $query->bindParam('brand', $brand);
 
+        $query->execute();
+        $ret = $query->fetch();
+        if (empty($ret)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private function returnCarsAsNormalArray(array $cars): array
+    {
         $cars_ret = [];
 
         foreach ($cars as $car) {
@@ -31,6 +39,28 @@ class CarModel
         }
 
         return $cars_ret;
+    }
+
+    public function filterCarBrand($brand): array
+    // works like getAllCarInfo but only returns results which match $brand
+    {
+        $query = $this->db->prepare("SELECT * FROM `cars` WHERE `brand` = :brand;");
+        $query->bindParam('brand', $brand);
+        $query->execute();
+        $cars = $query->fetchAll();
+        return $this->returnCarsAsNormalArray($cars);
+    }
+
+
+    public function getAllCarInfo(): array
+    {
+        $query = $this->db->prepare(
+            "SELECT `name`, `year_made`, `zero_sixty`, `price`, `brand` FROM `cars` WHERE `deleted` = 0"
+        );
+        $query->execute();
+        $cars = $query->fetchAll();
+
+        return $this->returnCarsAsNormalArray($cars);
     }
 
     public function getAllCarNames(): array | false

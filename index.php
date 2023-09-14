@@ -5,11 +5,6 @@ require_once "src/utils.php";
 
 use CarStore\CarModel;
 
-$model = new CarModel(make_db());
-$cars = $model->getAllCarInfo();
-
-$car_list = create_list_of_cars($cars);
-
 // initialise error messages
 $err_msg = "";
 $out = true;
@@ -58,10 +53,34 @@ if (isset($_POST["car_name"])) {
         </form>
     </header>
 
+    <div>
+        <h3>Filter by car brand</h3>
+        <form method="POST">
+
+            <?php
+
+            $model = new CarModel(make_db());
+            if (isset($_POST["car_brand_filter"])) {
+                $brand = $_POST["car_brand_filter"];
+
+                $car_list = filterBrand($brand, $model);
+                if (!$car_list) {
+                    echo "Invalid brand name<br>";
+                }
+            } else {
+                $cars = $model->getAllCarInfo();
+                $car_list = create_list_of_cars($cars);
+            }
+            ?>
+
+            <Label for="car_brand">Filter by brand</Label>
+            <input type="text" name="car_brand_filter" id="car_brand_filter">
+            <input type="submit">
+        </form>
+    </div>
+
 
     <form method="POST">
-
-
         <h3>Delete a car</h3>
         <?php
         echo $err_msg;
@@ -76,7 +95,9 @@ if (isset($_POST["car_name"])) {
     </form>
 
     <?php
-    echo $car_list;
+    if (!empty($car_list)) {
+        echo $car_list;
+    }
     ?>
 
     <h3>Edit a cars details</h3>
