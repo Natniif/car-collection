@@ -10,7 +10,7 @@ function make_db(): PDO
     return $db;
 }
 
-function create_list_of_cars(array $cars): string | false
+function create_list_of_cars(array $cars, $deleted = false): string | false
 {
     foreach ($cars as $car) {
         if (!($car instanceof Car)) {
@@ -19,19 +19,35 @@ function create_list_of_cars(array $cars): string | false
     }
 
     if (empty($cars)) {
-        throw new Error("Empty car array");
+        return false;
     }
 
     $ret = "";
 
-    foreach ($cars as $car) {
-        $ret .= "<h3>" . $car->name . "</h3>";
-        $ret .= "<ul>";
-        $ret .= "<li>" . $car->year_made . "</li>";
-        $ret .= "<li>" . $car->zero_sixty . "</li>";
-        $ret .= "<li>" . $car->price . "</li>";
-        $ret .= "<li>" . $car->brand . "</li>";
-        $ret .= "</ul>";
+    if (!$deleted) {
+        foreach ($cars as $car) {
+            $ret .= "<h3>" . $car->name . "</h3>";
+            $ret .= "<ul>";
+            $ret .= "<li>" . $car->year_made . "</li>";
+            $ret .= "<li>" . $car->zero_sixty . "</li>";
+            $ret .= "<li>" . $car->price . "</li>";
+            $ret .= "<li>" . $car->brand . "</li>";
+            $ret .= "</ul>";
+        }
+    } else {
+        foreach ($cars as $car) {
+            $ret .= '<form method="POST" action="restore_cars.php">';
+            $ret .= "<h3>" . $car->name . "</h3>";
+            $ret .= "<ul>";
+            $ret .= "<li>" . $car->year_made . "</li>";
+            $ret .= "<li>" . $car->zero_sixty . "</li>";
+            $ret .= "<li>" . $car->price . "</li>";
+            $ret .= "<li>" . $car->brand . "</li>";
+            $ret .= "</ul>";
+            $ret .= '<input type="hidden" name="restore_id" value="' . $car->id . '">';
+            $ret .= '<input type="submit" value="Restore Car">';
+            $ret .= '</form>';
+        }
     }
 
     return $ret;

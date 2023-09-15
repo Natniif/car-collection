@@ -1,3 +1,16 @@
+<?php
+session_start();
+
+require_once "src/utils.php";
+require_once "vendor/autoload.php";
+
+use CarStore\CarModel;
+
+$model = new CarModel(make_db());
+$cars = $model->getAllCarInfo($deleted = true);
+$car_list = create_list_of_cars($cars, $deleted = true);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,17 +23,6 @@
 <body>
 
     <?php
-
-    require_once "src/utils.php";
-    require_once "vendor/autoload.php";
-
-    use CarStore\Car;
-    use CarStore\CarModel;
-
-    $model = new CarModel(make_db());
-    $cars = $model->getAllCarInfo($deleted = true);
-    $car_list = create_list_of_cars($cars, $deleted = true);
-
     if (!empty($car_list)) {
         echo $car_list;
     } else {

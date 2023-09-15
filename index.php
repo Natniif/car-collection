@@ -121,7 +121,6 @@ if (isset($_POST["car_name"])) {
             $price_edit = $_POST["price_edit"];
             $brand_edit = $_POST["brand_edit"];
 
-
             $method = new CarModel(make_db());
 
             if (!empty($year_made_edit) || !empty($zero_sixty_edit) || !empty($price_edit) || !empty($brand_edit)) {
