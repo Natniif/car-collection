@@ -13,7 +13,7 @@ class validateAddCarDataFieldsTest extends TestCase
     {
         $expected =
             "Invalid name<br>Invalid year<br>Invalid zero to sixty value<br>Invalid price<br>Invalid brand name<br>";
-        $this->assertEquals($expected, validateAddCarDataFields(
+        $this->assertEquals($expected, validateDataFields(
             "",
             -2000,
             -23,
@@ -26,7 +26,7 @@ class validateAddCarDataFieldsTest extends TestCase
     {
         $this->assertEquals(
             "Car successfully submitted",
-            validateAddCarDataFields("ferrari spyder", 2000, 5.3, 200000, "ferrari")
+            validateDataFields("ferrari spyder", 2000, 5.3, 200000, "ferrari")
         );
     }
 }

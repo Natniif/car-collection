@@ -19,7 +19,7 @@ class ListOfCarsTest extends TestCase
         $expected .= "<li>" . "ferrari" . "</li>";
         $expected .= "</ul>";
 
-        $car = [new Car("ferrari spyder", 2000, 2.3, 200000, "ferrari")];
+        $car = [new Car(1, "ferrari spyder", 2000, 2.3, 200000, "ferrari")];
 
         $this->assertEquals($expected, create_list_of_cars($car));
     }
@@ -33,8 +33,6 @@ class ListOfCarsTest extends TestCase
     public function test_Empty_Array()
     {
         $input = [];
-        $this->expectExceptionMessage("Empty car array");
-
-        create_list_of_cars($input);
+        $this->assertFalse(create_list_of_cars($input));
     }
 }
