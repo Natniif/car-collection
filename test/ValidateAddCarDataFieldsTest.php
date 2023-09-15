@@ -4,8 +4,6 @@ require_once "src/utils.php";
 require_once "vendor/autoload.php";
 
 use PHPUnit\Framework\TestCase;
-use CarStore\Car;
-
 
 class validateAddCarDataFieldsTest extends TestCase
 {
