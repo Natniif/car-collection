@@ -47,7 +47,7 @@ if (
 <body>
 
     <form method="POST" action="index.php">
-        <input type="submit" value="Home">
+        <input type="submit" value="Return to Home Page">
     </form>
 
     <h2>Add a Car</h2>
