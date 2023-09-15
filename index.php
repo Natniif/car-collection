@@ -48,6 +48,11 @@ if (isset($_POST["car_name"])) {
 
     <header class="header">
         <h2>Home</h2>
+
+        <form method="POST" action="deleted_cars.php">
+            <input type="submit" value="Deleted cars">
+        </form>
+
         <form method="POST" action="add_car.php">
             <input type="submit" value="Add Car">
         </form>
@@ -116,11 +121,10 @@ if (isset($_POST["car_name"])) {
             $price_edit = $_POST["price_edit"];
             $brand_edit = $_POST["brand_edit"];
 
-
             $method = new CarModel(make_db());
 
             if (!empty($year_made_edit) || !empty($zero_sixty_edit) || !empty($price_edit) || !empty($brand_edit)) {
-                $edit_err_msg = validateEditCarDataFields($car_name_edit, (int)$year_made_edit, (float)$zero_sixty_edit, (float)$price_edit, $brand_edit);
+                $edit_err_msg = validateDataFields($car_name_edit, (int)$year_made_edit, (float)$zero_sixty_edit, (float)$price_edit, $brand_edit);
                 echo $edit_err_msg;
                 if ($method->getIdFromName($car_name_edit) && $edit_err_msg == "Car successfully submitted") {
                     $car = new Car($method->getIdFromName($car_name_edit), $car_name_edit, (int)$year_made_edit, (float)$zero_sixty_edit, (float)$price_edit, $brand_edit);
