@@ -84,6 +84,24 @@ if (isset($_POST["car_name"])) {
         </form>
     </div>
 
+    <div>
+        <h3>Search Cars</h3>
+        <form method="POST">
+
+            <?php
+
+            $model = new CarModel(make_db());
+            if (isset($_POST["search"])) {
+                $key = $_POST["search"];
+            }
+
+            ?>
+
+            <Label for="search">Search</Label>
+            <input type="text" name="search" id="search-bar">
+            <input type="submit">
+        </form>
+    </div>
 
     <form method="POST">
         <h3>Delete a car</h3>
@@ -110,8 +128,6 @@ if (isset($_POST["car_name"])) {
 
     <form method="POST">
         <?php
-
-        use CarStore\Car;
 
         if (isset($_POST["name_edit"])) {
 
