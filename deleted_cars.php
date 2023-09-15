@@ -22,6 +22,10 @@ $car_list = create_list_of_cars($cars, $deleted = true);
 
 <body>
 
+    <form method="POST" action="index.php">
+        <input type="submit" value="Return to Home Page">
+    </form>
+
     <?php
     if (!empty($car_list)) {
         echo $car_list;
