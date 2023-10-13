@@ -20,6 +20,9 @@ run tests from source using `phpunit test`
 ### Dependencies 
 Unit tests depend on PHPUnit 
 
+Run tests with:
+
+```PHPUnit test```
 
 
 
